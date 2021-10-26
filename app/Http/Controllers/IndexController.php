@@ -6,11 +6,12 @@ namespace App\Http\Controllers;
 use App\Pool\mysql\MysqlPool;
 use Swoole\Database\PDOConfig;
 use Swoole\Database\PDOPool;
+use Swoole\Database\RedisConfig;
+use Swoole\Database\RedisPool;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 use Swoole\Coroutine\Redis as CoRedis;
-use Swoole\Coroutine\MySQL as CoMysql;
 use Swoole\Coroutine\WaitGroup;
 use Swoole\Runtime;
 use Swoole\Coroutine as Co;
@@ -112,6 +113,13 @@ class IndexController extends Controller
         $start = microtime(true);
 
         run(function() {
+            $redisPool = new RedisPool((new RedisConfig)
+                ->withHost('127.0.0.1')
+                ->withPort(6379)
+                ->withAuth('')
+                ->withDbIndex(0)
+                ->withTimeout(1)
+            );
             $pool = new PDOPool((new PDOConfig)
                 ->withHost('127.0.0.1')
                 ->withPort(3306)
@@ -121,15 +129,17 @@ class IndexController extends Controller
                 ->withUsername('root')
                 ->withPassword('123456')
             );
+            $num = 0;
             for($j=0; $j <200; $j++){
                 $wg = new WaitGroup();
                 for($i=0; $i<500; $i++){
+                    $num++;
                     $wg->add();
-                    Co::create(function () use ($wg, $pool){
-                        $coRedis = new CoRedis();
-                        $coRedis->connect('127.0.0.1', 6379);
+                    Co::create(function () use ($wg, $pool, $redisPool, $num){
+                        $redis = $redisPool->get();
                         // redis中获取用户信息，推送消息给用户，用户获取优惠劵
-                        $userInfo = $coRedis->rpop('laravel_database_swoole_list');
+                        $userInfo = $redis->rpop('laravel_database_swoole_list');
+                        $redisPool->put($redis);
                         $userArr = json_decode($userInfo, true);
                         $data = [
                             'mobile'=>$userArr['mobile'],
@@ -149,14 +159,15 @@ class IndexController extends Controller
                                 throw new \RuntimeException('Prepare failed');
                             }
                             if(!isset($userArr['mobile'])){
-                                Log::info("数据异常".$userInfo);
+
+                                Log::info("数据异常".$userInfo.",redis连接：".json_encode($coRedis));
                             }
                             $result = $statement->execute([$userArr['mobile'], $userArr['coupon_id'], time()]);
                             if (!$result) {
                                 throw new \RuntimeException('Execute failed');
                             }
                             $pool->put($pdo);
-                            echo "发送成功".PHP_EOL;
+                            echo "发送成功,数据编号：".$num.PHP_EOL;
                         }else{
                             echo "发送失败".PHP_EOL;
                         }
