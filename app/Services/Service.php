@@ -85,6 +85,7 @@ class Service
      * @param   string  $start      开始时间
      * @param   string  $end        结束时间
      * @param   int     $nums       切分数目
+     * @param   int     $day_at     开始时间零点时间
      * @param   boolean $format     是否格式化
      * @return  array               时间段数组
      * DATE: 2021/11/03
@@ -92,7 +93,6 @@ class Service
      */
 
     public static function splitTimeSlot($start, $end="", $nums = 7, $day_at, $format=true){
-
         //获取开始小时
         $start_at = $start - $day_at;
         $parts = ($end - $start)/$nums;
