@@ -27,3 +27,9 @@ Route::prefix('v1')->group(function (){
     // 测试入列redis
     Route::get('/toRedisList','IndexController@toRedisList');
 });
+
+// 用户相关接口
+Route::prefix('v1')->middleware(['apiverify','tokenverify'])->group(function (){
+    // 个人中心接口
+    Route::post('/api/member/profile','MemberController@profile');
+});
