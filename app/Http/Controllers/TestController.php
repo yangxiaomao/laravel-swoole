@@ -44,5 +44,18 @@ class TestController extends Controller
     }
 
 
+    /**
+     * TODO 模拟微信群发红包（算法）接口
+     * DATE: 2021/11/04
+     * Author: yxm
+     */
+    public function wxGroupRed()
+    {
+        // 调用群发红包接口 $totalAmount (分)
+        $arr = Service::wxGroupRed(10000, 10);
+        dd($arr);
+    }
+
+
 
 }
