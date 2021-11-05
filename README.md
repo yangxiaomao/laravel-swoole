@@ -31,3 +31,6 @@ swoole初体验
 ①，时间段拆分                 使用场景（例如秒杀时间段）                   Service::splitTimeSlot
 
 ②，模拟微信群发红包            使用场景（群红包随机拆分，包含手气最佳）        Service::wxGroupRed
+
+③，Websocket服务（基于swoole） 使用场景（同一场景数据同步推送，基于swoole，windows暂不支持）
+    TestController 控制器 webSocketServer方法

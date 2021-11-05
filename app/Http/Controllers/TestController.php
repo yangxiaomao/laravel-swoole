@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Services\Service;
+use App\Services\WebSocketService;
 
 class TestController extends Controller
 {
@@ -54,6 +55,24 @@ class TestController extends Controller
         // 调用群发红包接口 $totalAmount (分)
         $arr = Service::wxGroupRed(10000, 10);
         dd($arr);
+    }
+
+    /**
+     * TODO websocket服务监听
+     * DATE: 2021/11/05
+     * Author: yxm
+     */
+    public function webSocketServer(){
+
+        $server = WebSocketService::getWebSocketServer();
+        $server->on('open',[$this,'onOpen']);
+        $server->on('message', [$this, 'onMessage']);
+        $server->on('close', [$this, 'onClose']);
+        $server->on('request', [$this, 'onRequest']);
+        echo "swoole服务启动成功 ...".PHP_EOL;
+        echo "监听端口号为：0.0.0.0：8005".PHP_EOL;
+        $server->start();
+
     }
 
 
