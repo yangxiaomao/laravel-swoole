@@ -26,6 +26,8 @@ Route::prefix('v1')->group(function (){
     Route::get('/index','IndexController@index');
     // 测试入列redis
     Route::get('/toRedisList','IndexController@toRedisList');
+    // 秒杀接口
+    Route::post('/seckill', 'TestController@seckill');
 });
 
 // 用户相关接口

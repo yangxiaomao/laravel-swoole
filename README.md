@@ -2,6 +2,8 @@ laravel-swoole & Laravel7
 
 swoole初体验
 
+项目根目录执行命令：php artisan swoole:http start
+
 测试数据：php 同步与异步的性能较量
 
 条件1：从redis队列中取数据（500）
@@ -34,4 +36,8 @@ swoole初体验
 
 ③，Websocket服务（基于swoole） 使用场景（同一场景数据同步推送，基于swoole，windows暂不支持）
     服务启动脚本命令（守护进程启动）   php artisan action:call TestController@webSocketServer
+    
+④，秒杀功能（防止超卖）         使用场景（秒杀，抢购，防止超卖）
+    流程（先设置商品库存数量入redis，使用分布式锁，防止超卖）
+    测试脚本命令  php artisan action:call TestController@concurrentCurl
 

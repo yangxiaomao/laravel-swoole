@@ -74,7 +74,7 @@ class CurlService
         $conn = [];
         //创建批处理curl句柄
         $mh = curl_multi_init();
-        for($i=0; $i<=$num; $i++){
+        for($i=0; $i<$num; $i++){
             // //初始化各个子连接
             $conn[$i] = curl_init();
             // 设置URL和相应的选项
@@ -85,6 +85,11 @@ class CurlService
             curl_setopt($conn[$i], CURLOPT_HTTPHEADER, $aHeader);
             // POST数据
             curl_setopt($conn[$i], CURLOPT_POST, 1);
+            $data = [
+                'user_id'=>$i+1,
+                'goods_id'=>1,
+                'num'=>1
+            ];
             curl_setopt($conn[$i], CURLOPT_POSTFIELDS, $data);
             //增加句柄
             curl_multi_add_handle($mh, $conn[$i]);   //加入多处理句柄
@@ -110,20 +115,19 @@ class CurlService
             }
         }
 
-        for($j=0; $j<=$num; $j++){
+        for($j=0; $j<$num; $j++){
             $info = curl_multi_info_read($mh);
-            // var_dump($info);
 
-            $headers = curl_getinfo($conn[$i]);
-            // var_dump($headers);
+            $headers = curl_getinfo($conn[$j]);
 
-            $res[$i] = curl_multi_getcontent($conn[$i]);
+
+            $res[$j] = curl_multi_getcontent($conn[$j]);
 
             //移除curl批处理句柄资源中的某一个句柄资源
-            curl_multi_remove_handle($mh, $conn[$i]);
+            curl_multi_remove_handle($mh, $conn[$j]);
 
             //关闭curl会话
-            curl_close($conn[$i]);
+            curl_close($conn[$j]);
         }
 
         //关闭全部句柄

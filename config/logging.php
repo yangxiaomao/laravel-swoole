@@ -99,6 +99,12 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        //自定义日志管道
+        'customlog' => [
+            'driver' => 'single',
+            'path'   => storage_path("logs/custom_log-" . date('Y-m') . ".log"),
+            'level'  => 'info',
+        ]
     ],
 
 ];
