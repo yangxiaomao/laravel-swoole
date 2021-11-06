@@ -33,4 +33,5 @@ swoole初体验
 ②，模拟微信群发红包            使用场景（群红包随机拆分，包含手气最佳）        Service::wxGroupRed
 
 ③，Websocket服务（基于swoole） 使用场景（同一场景数据同步推送，基于swoole，windows暂不支持）
-    TestController 控制器 webSocketServer方法
+    服务启动脚本命令（守护进程启动）   php artisan action:call TestController@webSocketServer
+

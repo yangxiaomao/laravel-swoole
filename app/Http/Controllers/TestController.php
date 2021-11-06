@@ -70,7 +70,7 @@ class TestController extends Controller
         $server->on('close', [$this, 'onClose']);
         $server->on('request', [$this, 'onRequest']);
         echo "swoole服务启动成功 ...".PHP_EOL;
-        echo "监听端口号为：0.0.0.0：8005".PHP_EOL;
+        echo "监听端口号为：0.0.0.0:8005".PHP_EOL;
         $server->start();
 
     }

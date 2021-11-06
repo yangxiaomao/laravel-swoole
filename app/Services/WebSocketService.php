@@ -64,7 +64,7 @@ class WebSocketService
      */
     public function onClose($serv,$fd)
     {
-        $this->line("客户端 {$fd} 关闭");
+        echo "客户端 {$fd} 关闭".PHP_EOL;
     }
 
     /**
