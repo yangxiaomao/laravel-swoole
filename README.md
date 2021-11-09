@@ -30,14 +30,16 @@ swoole初体验
 
 新增封装方法
 
-①，时间段拆分                 使用场景（例如秒杀时间段）                   Service::splitTimeSlot
+一，时间段拆分                 使用场景（例如秒杀时间段）                   Service::splitTimeSlot
 
-②，模拟微信群发红包            使用场景（群红包随机拆分，包含手气最佳）        Service::wxGroupRed
+二，模拟微信群发红包            使用场景（群红包随机拆分，包含手气最佳）        Service::wxGroupRed
 
-③，Websocket服务（基于swoole） 使用场景（同一场景数据同步推送，基于swoole，windows暂不支持）
+三，Websocket服务（基于swoole） 使用场景（同一场景数据同步推送，基于swoole，windows暂不支持）
     服务启动脚本命令（守护进程启动）   php artisan action:call TestController@webSocketServer
     
-④，秒杀功能（防止超卖）         使用场景（秒杀，抢购，防止超卖）
+四，秒杀功能（防止超卖）         使用场景（秒杀，抢购，防止超卖）
     流程（先设置商品库存数量入redis，使用分布式锁，防止超卖）
     测试脚本命令  php artisan action:call TestController@concurrentCurl
+    
+五，多句柄模拟并发Curl请求       使用场景（http并发测试）                    CurlService::concurrentCurl
 
