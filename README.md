@@ -43,3 +43,21 @@ swoole初体验
     
 五，多句柄模拟并发Curl请求       使用场景（http并发测试）                    CurlService::concurrentCurl
 
+
+下面是另一个项目（自己编写的php，基于swoole的简单框架）
+
+aglswoole自己编写的swoole框架，技术总结，分享
+
+一，热更新（swoole http服务启动后，修改代码不需要重新启动）
+
+二，spl_autoload_register 自动加载
+
+三，http协议，简单的请求方式（get，post），后续迭代
+
+四，msyql链接池 （简单的mysql操作）
+
+五，设计了Controller，Method ，（简单C，后续迭代MVC）
+
+六，定义了一些辅助函数
+
+（一个简单的框架，暂时还不成熟，预计2022-01-01开源，敬请期待，并提出宝贵意见，谢谢）
