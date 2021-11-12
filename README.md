@@ -53,6 +53,7 @@ aglswoole自己编写的swoole框架，技术总结，分享
 二，spl_autoload_register 自动加载
 
 三，http协议，简单的请求方式（get，post），后续迭代
+    ①，定义路由，暂时支持get,post类型，后期封装独立路由文件，路由走控制器操作
 
 四，msyql链接池 （简单的mysql操作）
 
